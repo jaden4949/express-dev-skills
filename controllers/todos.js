@@ -26,3 +26,14 @@ function index(req, res) {
  module.exports = {
    index
  };
+
+ function show(req, res) {
+    res.render('todos/show', {
+      todo: Todo.getOne(req.params.id),
+    });
+  }
+module.exports = {
+    index,
+    show
+}
+
