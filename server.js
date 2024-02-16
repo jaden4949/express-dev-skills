@@ -38,4 +38,33 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.set('view engine', 'ejs');
+	
+// add middleware below the above line of code
+app.use(function(req, res, next) {
+  console.log('Hello SEI!');
+  next();  // Pass the request to the next middleware
+});
+
+app.use(function(req, res, next) {
+  console.log('Hello SEI!');
+  // Add a time property to the res.locals object
+  // The time property will then be accessible when rendering a view
+  res.locals.time = new Date().toLocaleTimeString();
+  next();
+});
+
+app.use('/', indexRouter);
+app.use('/todos', todosRouter);
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));  // add this
+	
+app.use(function(req, res, next) {
+  console.log('Hello SEI!');
+  res.locals.time = new Date().toLocaleTimeString();
+  next();
+});
+app.use(express.urlencoded({ extended: false }));
+var logger = require('morgan');
+var methodOverride = require('method-override');
 module.exports = app;
